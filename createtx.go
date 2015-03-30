@@ -23,12 +23,14 @@ import (
 	"sort"
 	"time"
 
-	"github.com/FactomProject/btcd/blockchain"
+	// 	"github.com/FactomProject/btcd/blockchain"
 	"github.com/FactomProject/btcd/txscript"
 	"github.com/FactomProject/btcd/wire"
 	"github.com/FactomProject/btcutil"
 	"github.com/FactomProject/btcwallet/txstore"
 	"github.com/FactomProject/btcwallet/waddrmgr"
+
+	"github.com/FactomProject/FactomCode/util"
 )
 
 const (
@@ -320,45 +322,51 @@ func addOutputs(msgtx *wire.MsgTx, pairs map[string]btcutil.Amount) (btcutil.Amo
 }
 
 func (w *Wallet) findEligibleOutputs(account uint32, minconf int, bs *waddrmgr.BlockStamp) ([]txstore.Credit, error) {
-	unspent, err := w.TxStore.UnspentOutputs()
-	if err != nil {
-		return nil, err
-	}
-	// Filter out unspendable outputs, that is, remove those that (at this
-	// time) are not P2PKH outputs.  Other inputs must be manually included
-	// in transactions and sent (for example, using createrawtransaction,
-	// signrawtransaction, and sendrawtransaction).
-	eligible := make([]txstore.Credit, 0, len(unspent))
-	for i := range unspent {
-		switch txscript.GetScriptClass(unspent[i].TxOut().PkScript) {
-		case txscript.PubKeyHashTy:
-			if !unspent[i].Confirmed(minconf, bs.Height) {
-				continue
-			}
-			// Coinbase transactions must have have reached maturity
-			// before their outputs may be spent.
-			if unspent[i].IsCoinbase() {
-				target := blockchain.CoinbaseMaturity
-				if !unspent[i].Confirmed(target, bs.Height) {
+	util.Trace("NOT IMPLEMENTED !!!!!!!!!")
+
+	return nil, errors.New("NOT IMPLEMENTED")
+
+	/*
+		unspent, err := w.TxStore.UnspentOutputs()
+		if err != nil {
+			return nil, err
+		}
+		// Filter out unspendable outputs, that is, remove those that (at this
+		// time) are not P2PKH outputs.  Other inputs must be manually included
+		// in transactions and sent (for example, using createrawtransaction,
+		// signrawtransaction, and sendrawtransaction).
+		eligible := make([]txstore.Credit, 0, len(unspent))
+		for i := range unspent {
+			switch txscript.GetScriptClass(unspent[i].TxOut().PkScript) {
+			case txscript.PubKeyHashTy:
+				if !unspent[i].Confirmed(minconf, bs.Height) {
 					continue
 				}
-			}
+				// Coinbase transactions must have have reached maturity
+				// before their outputs may be spent.
+				if unspent[i].IsCoinbase() {
+					target := blockchain.CoinbaseMaturity
+					if !unspent[i].Confirmed(target, bs.Height) {
+						continue
+					}
+				}
 
-			// Locked unspent outputs are skipped.
-			if w.LockedOutpoint(*unspent[i].OutPoint()) {
-				continue
-			}
+				// Locked unspent outputs are skipped.
+				if w.LockedOutpoint(*unspent[i].OutPoint()) {
+					continue
+				}
 
-			creditAccount, err := w.CreditAccount(unspent[i])
-			if err != nil {
-				continue
-			}
-			if creditAccount == account {
-				eligible = append(eligible, unspent[i])
+				creditAccount, err := w.CreditAccount(unspent[i])
+				if err != nil {
+					continue
+				}
+				if creditAccount == account {
+					eligible = append(eligible, unspent[i])
+				}
 			}
 		}
-	}
-	return eligible, nil
+		return eligible, nil
+	*/
 }
 
 // signMsgTx sets the SignatureScript for every item in msgtx.TxIn.
@@ -370,54 +378,64 @@ func signMsgTx(msgtx *wire.MsgTx, prevOutputs []txstore.Credit, mgr *waddrmgr.Ma
 			"Number of prevOutputs (%d) does not match number of tx inputs (%d)",
 			len(prevOutputs), len(msgtx.TxIn))
 	}
-	for i, output := range prevOutputs {
+	//	for i, output := range prevOutputs {
+	for _, output := range prevOutputs {
 		// Errors don't matter here, as we only consider the
 		// case where len(addrs) == 1.
 		_, addrs, _, _ := output.Addresses(activeNet.Params)
 		if len(addrs) != 1 {
 			continue
 		}
-		apkh, ok := addrs[0].(*btcutil.AddressPubKeyHash)
-		if !ok {
-			return ErrUnsupportedTransactionType
-		}
+		/*
+			apkh, ok := addrs[0].(*btcutil.AddressPubKeyHash)
+			if !ok {
+				return ErrUnsupportedTransactionType
+			}
 
-		ai, err := mgr.Address(apkh)
-		if err != nil {
-			return fmt.Errorf("cannot get address info: %v", err)
-		}
+				ai, err := mgr.Address(apkh)
+				if err != nil {
+					return fmt.Errorf("cannot get address info: %v", err)
+				}
 
-		pka := ai.(waddrmgr.ManagedPubKeyAddress)
-		privkey, err := pka.PrivKey()
-		if err != nil {
-			return fmt.Errorf("cannot get private key: %v", err)
-		}
+					pka := ai.(waddrmgr.ManagedPubKeyAddress)
+					privkey, err := pka.PrivKey()
+					if err != nil {
+						return fmt.Errorf("cannot get private key: %v", err)
+					}
 
-		sigscript, err := txscript.SignatureScript(msgtx, i,
-			output.TxOut().PkScript, txscript.SigHashAll, privkey,
-			ai.Compressed())
-		if err != nil {
-			return fmt.Errorf("cannot create sigscript: %s", err)
-		}
-		msgtx.TxIn[i].SignatureScript = sigscript
+						sigscript, err := txscript.SignatureScript(msgtx, i,
+							output.TxOut().PkScript, txscript.SigHashAll, privkey,
+							ai.Compressed())
+						if err != nil {
+							return fmt.Errorf("cannot create sigscript: %s", err)
+						}
+						msgtx.TxIn[i].SignatureScript = sigscript
+		*/
+		util.Trace("NOT IMPLEMENTED !!!!!!!!!")
+		return errors.New("NOT IMPLEMENTED")
 	}
 
 	return nil
 }
 
 func validateMsgTx(msgtx *wire.MsgTx, prevOutputs []txstore.Credit) error {
-	for i, txin := range msgtx.TxIn {
-		engine, err := txscript.NewScript(
-			txin.SignatureScript, prevOutputs[i].TxOut().PkScript,
-			i, msgtx, txscript.StandardVerifyFlags)
-		if err != nil {
-			return fmt.Errorf("cannot create script engine: %s", err)
+	util.Trace("NOT IMPLEMENTED !!!!!!!!!")
+	return errors.New("NOT IMPLEMENTED")
+
+	/*
+		for i, txin := range msgtx.TxIn {
+			engine, err := txscript.NewScript(
+				txin.SignatureScript, prevOutputs[i].TxOut().PkScript,
+				i, msgtx, txscript.StandardVerifyFlags)
+			if err != nil {
+				return fmt.Errorf("cannot create script engine: %s", err)
+			}
+			if err = engine.Execute(); err != nil {
+				return fmt.Errorf("cannot validate transaction: %s", err)
+			}
 		}
-		if err = engine.Execute(); err != nil {
-			return fmt.Errorf("cannot validate transaction: %s", err)
-		}
-	}
-	return nil
+		return nil
+	*/
 }
 
 // minimumFee estimates the minimum fee required for a transaction.

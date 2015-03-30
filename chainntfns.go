@@ -17,7 +17,7 @@
 package main
 
 import (
-	"github.com/FactomProject/btcd/txscript"
+	//	"github.com/FactomProject/btcd/txscript"
 	"github.com/FactomProject/btcutil"
 	"github.com/FactomProject/btcwallet/chain"
 	"github.com/FactomProject/btcwallet/txstore"
@@ -114,43 +114,45 @@ func (w *Wallet) addReceivedTx(tx *btcutil.Tx, block *txstore.Block) error {
 	// For every output, if it pays to a wallet address, insert the
 	// transaction into the store (possibly moving it from unconfirmed to
 	// confirmed), and add a credit record if one does not already exist.
-	var txr *txstore.TxRecord
-	txInserted := false
-	for txOutIdx, txOut := range tx.MsgTx().TxOut {
-		// Errors don't matter here.  If addrs is nil, the range below
-		// does nothing.
-		_, addrs, _, _ := txscript.ExtractPkScriptAddrs(txOut.PkScript,
-			activeNet.Params)
-		insert := false
-		for _, addr := range addrs {
-			_, err := w.Manager.Address(addr)
-			if err == nil {
-				insert = true
-				break
-			}
-		}
-		if insert {
-			if !txInserted {
-				var err error
-				txr, err = w.TxStore.InsertTx(tx, block)
-				if err != nil {
-					return err
+	/*
+		var txr *txstore.TxRecord
+		txInserted := false
+		for txOutIdx, txOut := range tx.MsgTx().TxOut {
+			// Errors don't matter here.  If addrs is nil, the range below
+			// does nothing.
+					_, addrs, _, _ := txscript.ExtractPkScriptAddrs(txOut.PkScript,
+						activeNet.Params)
+					insert := false
+					for _, addr := range addrs {
+						_, err := w.Manager.Address(addr)
+						if err == nil {
+							insert = true
+							break
+						}
+					}
+				if insert {
+					if !txInserted {
+						var err error
+						txr, err = w.TxStore.InsertTx(tx, block)
+						if err != nil {
+							return err
+						}
+						// InsertTx may have moved a previous unmined
+						// tx, so mark the entire store as dirty.
+						w.TxStore.MarkDirty()
+						txInserted = true
+					}
+					if txr.HasCredit(txOutIdx) {
+						continue
+					}
+					_, err := txr.AddCredit(uint32(txOutIdx), false)
+					if err != nil {
+						return err
+					}
+					w.TxStore.MarkDirty()
 				}
-				// InsertTx may have moved a previous unmined
-				// tx, so mark the entire store as dirty.
-				w.TxStore.MarkDirty()
-				txInserted = true
-			}
-			if txr.HasCredit(txOutIdx) {
-				continue
-			}
-			_, err := txr.AddCredit(uint32(txOutIdx), false)
-			if err != nil {
-				return err
-			}
-			w.TxStore.MarkDirty()
 		}
-	}
+	*/
 
 	bs, err := w.chainSvr.BlockStamp()
 	if err == nil {

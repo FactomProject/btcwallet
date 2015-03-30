@@ -1044,10 +1044,10 @@ func (w *Wallet) ListUnspent(minconf, maxconf int,
 		}
 	include:
 		result := &btcjson.ListUnspentResult{
-			TxId:          credit.Tx().Sha().String(),
-			Vout:          credit.OutputIndex,
-			Account:       accountName,
-			ScriptPubKey:  hex.EncodeToString(credit.TxOut().PkScript),
+			TxId:    credit.Tx().Sha().String(),
+			Vout:    credit.OutputIndex,
+			Account: accountName,
+			//			ScriptPubKey:  hex.EncodeToString(credit.TxOut().PkScript),
 			Amount:        credit.Amount().ToBTC(),
 			Confirmations: int64(confs),
 		}
