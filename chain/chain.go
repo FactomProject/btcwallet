@@ -64,10 +64,10 @@ func NewClient(chainParams *chaincfg.Params, connect, user, pass string, certs [
 		OnClientConnected:   client.onClientConnect,
 		OnBlockConnected:    client.onBlockConnected,
 		OnBlockDisconnected: client.onBlockDisconnected,
-		OnRecvTx:            client.onRecvTx,
-		OnRedeemingTx:       client.onRedeemingTx,
-		OnRescanFinished:    client.onRescanFinished,
-		OnRescanProgress:    client.onRescanProgress,
+		//		OnRecvTx:            client.onRecvTx,
+		//		OnRedeemingTx:       client.onRedeemingTx,
+		OnRescanFinished: client.onRescanFinished,
+		OnRescanProgress: client.onRescanProgress,
 	}
 	conf := btcrpcclient.ConnConfig{
 		Host:                connect,

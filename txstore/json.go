@@ -20,7 +20,7 @@ import (
 	"github.com/FactomProject/btcd/blockchain"
 	"github.com/FactomProject/btcd/btcjson"
 	"github.com/FactomProject/btcd/chaincfg"
-	"github.com/FactomProject/btcd/txscript"
+	//	"github.com/FactomProject/btcd/txscript"
 	"github.com/FactomProject/btcutil"
 )
 
@@ -68,15 +68,17 @@ func (d Debits) toJSON(account string, chainHeight int32,
 	reply := make([]btcjson.ListTransactionsResult, 0, len(msgTx.TxOut))
 
 	for _, txOut := range msgTx.TxOut {
-		address := ""
-		_, addrs, _, _ := txscript.ExtractPkScriptAddrs(txOut.PkScript, net)
-		if len(addrs) == 1 {
-			address = addrs[0].EncodeAddress()
-		}
+		/*
+			address := ""
+			_, addrs, _, _ := txscript.ExtractPkScriptAddrs(txOut.PkScript, net)
+			if len(addrs) == 1 {
+				address = addrs[0].EncodeAddress()
+			}
+		*/
 
 		result := btcjson.ListTransactionsResult{
-			Account:         account,
-			Address:         address,
+			Account: account,
+			//			Address:         address,
 			Category:        "send",
 			Amount:          btcutil.Amount(-txOut.Value).ToBTC(),
 			Fee:             d.Fee().ToBTC(),
@@ -166,16 +168,18 @@ func (c Credit) toJSON(account string, chainHeight int32,
 	msgTx := c.Tx().MsgTx()
 	txout := msgTx.TxOut[c.OutputIndex]
 
-	var address string
-	_, addrs, _, _ := txscript.ExtractPkScriptAddrs(txout.PkScript, net)
-	if len(addrs) == 1 {
-		address = addrs[0].EncodeAddress()
-	}
+	/*
+		var address string
+		_, addrs, _, _ := txscript.ExtractPkScriptAddrs(txout.PkScript, net)
+		if len(addrs) == 1 {
+			address = addrs[0].EncodeAddress()
+		}
+	*/
 
 	result := btcjson.ListTransactionsResult{
-		Account:         account,
-		Category:        c.category(chainHeight).String(),
-		Address:         address,
+		Account:  account,
+		Category: c.category(chainHeight).String(),
+		//		Address:         address,
 		Amount:          btcutil.Amount(txout.Value).ToBTC(),
 		TxID:            c.Tx().Sha().String(),
 		Time:            c.received.Unix(),

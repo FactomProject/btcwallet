@@ -1426,9 +1426,12 @@ func (c Credit) Addresses(net *chaincfg.Params) (txscript.ScriptClass,
 	c.s.mtx.RLock()
 	defer c.s.mtx.RUnlock()
 
-	msgTx := c.Tx().MsgTx()
-	pkScript := msgTx.TxOut[c.OutputIndex].PkScript
-	return txscript.ExtractPkScriptAddrs(pkScript, net)
+	/*
+		msgTx := c.Tx().MsgTx()
+			pkScript := msgTx.TxOut[c.OutputIndex].PkScript
+			return txscript.ExtractPkScriptAddrs(pkScript, net)
+	*/
+	return txscript.ExtractPkScriptAddrs(nil, net)
 }
 
 // Change returns whether the credit is the result of a change output.
