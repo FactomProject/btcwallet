@@ -21,10 +21,10 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcutil"
-	"github.com/btcsuite/btcutil/hdkeychain"
-	"github.com/btcsuite/btcwallet/internal/zero"
+	"github.com/FactomProject/btcd/btcec"
+	"github.com/FactomProject/btcutil"
+	"github.com/FactomProject/btcutil/hdkeychain"
+	"github.com/FactomProject/btcwallet/internal/zero"
 )
 
 // ManagedAddress is an interface that provides acces to information regarding

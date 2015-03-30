@@ -31,17 +31,17 @@ import (
 	"sync"
 	"time"
 
-	"github.com/btcsuite/btcd/blockchain"
-	"github.com/btcsuite/btcd/btcjson"
-	"github.com/btcsuite/btcd/chaincfg"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
-	"github.com/btcsuite/btcutil/hdkeychain"
-	"github.com/btcsuite/btcwallet/chain"
-	"github.com/btcsuite/btcwallet/txstore"
-	"github.com/btcsuite/btcwallet/waddrmgr"
-	"github.com/btcsuite/btcwallet/walletdb"
-	"github.com/btcsuite/golangcrypto/ssh/terminal"
+	"github.com/FactomProject/btcd/blockchain"
+	"github.com/FactomProject/btcd/btcjson"
+	"github.com/FactomProject/btcd/chaincfg"
+	"github.com/FactomProject/btcd/wire"
+	"github.com/FactomProject/btcutil"
+	"github.com/FactomProject/btcutil/hdkeychain"
+	"github.com/FactomProject/btcwallet/chain"
+	"github.com/FactomProject/btcwallet/txstore"
+	"github.com/FactomProject/btcwallet/waddrmgr"
+	"github.com/FactomProject/btcwallet/walletdb"
+	"github.com/FactomProject/golangcrypto/ssh/terminal"
 )
 
 // ErrNotSynced describes an error where an operation cannot complete

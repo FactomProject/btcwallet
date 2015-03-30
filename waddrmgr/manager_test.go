@@ -23,11 +23,11 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/btcsuite/btcd/chaincfg"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
-	"github.com/btcsuite/btcwallet/waddrmgr"
-	"github.com/btcsuite/btcwallet/walletdb"
+	"github.com/FactomProject/btcd/chaincfg"
+	"github.com/FactomProject/btcd/wire"
+	"github.com/FactomProject/btcutil"
+	"github.com/FactomProject/btcwallet/waddrmgr"
+	"github.com/FactomProject/btcwallet/walletdb"
 )
 
 // newShaHash converts the passed big-endian hex string into a wire.ShaHash.

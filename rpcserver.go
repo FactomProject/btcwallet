@@ -37,17 +37,17 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcd/btcjson"
-	"github.com/btcsuite/btcd/btcjson/btcws"
-	"github.com/btcsuite/btcd/txscript"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcrpcclient"
-	"github.com/btcsuite/btcutil"
-	"github.com/btcsuite/btcwallet/chain"
-	"github.com/btcsuite/btcwallet/txstore"
-	"github.com/btcsuite/btcwallet/waddrmgr"
-	"github.com/btcsuite/websocket"
+	"github.com/FactomProject/btcd/btcec"
+	"github.com/FactomProject/btcd/btcjson"
+	"github.com/FactomProject/btcd/btcjson/btcws"
+	"github.com/FactomProject/btcd/txscript"
+	"github.com/FactomProject/btcd/wire"
+	"github.com/FactomProject/btcrpcclient"
+	"github.com/FactomProject/btcutil"
+	"github.com/FactomProject/btcwallet/chain"
+	"github.com/FactomProject/btcwallet/txstore"
+	"github.com/FactomProject/btcwallet/waddrmgr"
+	"github.com/FactomProject/websocket"
 )
 
 // Error types to simplify the reporting of specific categories of

@@ -21,11 +21,11 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/btcsuite/btcd/chaincfg"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil/hdkeychain"
-	"github.com/btcsuite/btcwallet/walletdb"
-	"github.com/btcsuite/fastsha256"
+	"github.com/FactomProject/btcd/chaincfg"
+	"github.com/FactomProject/btcd/wire"
+	"github.com/FactomProject/btcutil/hdkeychain"
+	"github.com/FactomProject/btcwallet/walletdb"
+	"github.com/FactomProject/fastsha256"
 )
 
 const (

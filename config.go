@@ -24,10 +24,10 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
-	"github.com/btcsuite/btcwallet/legacy/keystore"
-	flags "github.com/btcsuite/go-flags"
+	"github.com/FactomProject/btcd/wire"
+	"github.com/FactomProject/btcutil"
+	"github.com/FactomProject/btcwallet/legacy/keystore"
+	flags "github.com/FactomProject/go-flags"
 )
 
 const (

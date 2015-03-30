@@ -17,9 +17,9 @@
 package votingpool
 
 import (
-	"github.com/btcsuite/btcutil/hdkeychain"
-	"github.com/btcsuite/btcwallet/waddrmgr"
-	"github.com/btcsuite/btcwallet/walletdb"
+	"github.com/FactomProject/btcutil/hdkeychain"
+	"github.com/FactomProject/btcwallet/waddrmgr"
+	"github.com/FactomProject/btcwallet/walletdb"
 )
 
 // TstPutSeries transparently wraps the voting pool putSeries method.

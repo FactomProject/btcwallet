@@ -8,14 +8,14 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/btcsuite/btcd/txscript"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
-	"github.com/btcsuite/btcutil/hdkeychain"
-	"github.com/btcsuite/btcwallet/txstore"
-	"github.com/btcsuite/btcwallet/waddrmgr"
-	"github.com/btcsuite/btcwallet/walletdb"
-	_ "github.com/btcsuite/btcwallet/walletdb/bdb"
+	"github.com/FactomProject/btcd/txscript"
+	"github.com/FactomProject/btcd/wire"
+	"github.com/FactomProject/btcutil"
+	"github.com/FactomProject/btcutil/hdkeychain"
+	"github.com/FactomProject/btcwallet/txstore"
+	"github.com/FactomProject/btcwallet/waddrmgr"
+	"github.com/FactomProject/btcwallet/walletdb"
+	_ "github.com/FactomProject/btcwallet/walletdb/bdb"
 )
 
 // This is a tx that transfers funds (0.371 BTC) to addresses of known privKeys.

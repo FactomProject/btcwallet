@@ -17,11 +17,11 @@
 package txstore
 
 import (
-	"github.com/btcsuite/btcd/blockchain"
-	"github.com/btcsuite/btcd/btcjson"
-	"github.com/btcsuite/btcd/chaincfg"
-	"github.com/btcsuite/btcd/txscript"
-	"github.com/btcsuite/btcutil"
+	"github.com/FactomProject/btcd/blockchain"
+	"github.com/FactomProject/btcd/btcjson"
+	"github.com/FactomProject/btcd/chaincfg"
+	"github.com/FactomProject/btcd/txscript"
+	"github.com/FactomProject/btcutil"
 )
 
 // ToJSON returns a slice of btcjson listtransactions result types for all credits

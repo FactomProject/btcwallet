@@ -19,8 +19,8 @@ package waddrmgr
 import (
 	"sync"
 
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcwallet/walletdb"
+	"github.com/FactomProject/btcd/wire"
+	"github.com/FactomProject/btcwallet/walletdb"
 )
 
 const (

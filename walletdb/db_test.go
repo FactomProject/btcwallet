@@ -21,8 +21,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/btcsuite/btcwallet/walletdb"
-	_ "github.com/btcsuite/btcwallet/walletdb/bdb"
+	"github.com/FactomProject/btcwallet/walletdb"
+	_ "github.com/FactomProject/btcwallet/walletdb/bdb"
 )
 
 var (

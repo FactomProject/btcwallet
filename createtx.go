@@ -23,12 +23,12 @@ import (
 	"sort"
 	"time"
 
-	"github.com/btcsuite/btcd/blockchain"
-	"github.com/btcsuite/btcd/txscript"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
-	"github.com/btcsuite/btcwallet/txstore"
-	"github.com/btcsuite/btcwallet/waddrmgr"
+	"github.com/FactomProject/btcd/blockchain"
+	"github.com/FactomProject/btcd/txscript"
+	"github.com/FactomProject/btcd/wire"
+	"github.com/FactomProject/btcutil"
+	"github.com/FactomProject/btcwallet/txstore"
+	"github.com/FactomProject/btcwallet/waddrmgr"
 )
 
 const (

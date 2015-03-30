@@ -25,14 +25,14 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcutil"
-	"github.com/btcsuite/btcutil/hdkeychain"
-	"github.com/btcsuite/btcwallet/legacy/keystore"
-	"github.com/btcsuite/btcwallet/waddrmgr"
-	"github.com/btcsuite/btcwallet/walletdb"
-	_ "github.com/btcsuite/btcwallet/walletdb/bdb"
-	"github.com/btcsuite/golangcrypto/ssh/terminal"
+	"github.com/FactomProject/btcd/btcec"
+	"github.com/FactomProject/btcutil"
+	"github.com/FactomProject/btcutil/hdkeychain"
+	"github.com/FactomProject/btcwallet/legacy/keystore"
+	"github.com/FactomProject/btcwallet/waddrmgr"
+	"github.com/FactomProject/btcwallet/walletdb"
+	_ "github.com/FactomProject/btcwallet/walletdb/bdb"
+	"github.com/FactomProject/golangcrypto/ssh/terminal"
 )
 
 // promptConsoleList prompts the user with the given prefix, list of valid
