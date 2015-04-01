@@ -21,6 +21,8 @@ import (
 
 	"github.com/FactomProject/btcd/wire"
 	"github.com/FactomProject/btcwallet/walletdb"
+
+	"github.com/FactomProject/FactomCode/util"
 )
 
 const (
@@ -118,8 +120,12 @@ func (it *BlockIterator) Prev() bool {
 // BlockStamp returns the block stamp associated with the recently seen block
 // the iterator is currently pointing to.
 func (it *BlockIterator) BlockStamp() BlockStamp {
+	util.Trace()
+
 	it.mtx.RLock()
 	defer it.mtx.RUnlock()
+
+	util.Trace()
 
 	return BlockStamp{
 		Height: it.syncInfo.recentHeight -

@@ -24,6 +24,7 @@ import (
 	"os"
 	"runtime"
 
+	"github.com/FactomProject/FactomCode/util"
 	"github.com/FactomProject/btcwallet/chain"
 )
 
@@ -33,6 +34,7 @@ var (
 )
 
 func main() {
+	util.Trace()
 	// Use all processor cores.
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
@@ -48,6 +50,7 @@ func main() {
 // point any defers have already run, and if the error is non-nil, the program
 // can be exited with an error exit status.
 func walletMain() error {
+	util.Trace()
 	// Load configuration and parse command line.  This function also
 	// initializes logging and configures it accordingly.
 	tcfg, _, err := loadConfig()
@@ -56,6 +59,7 @@ func walletMain() error {
 	}
 	cfg = tcfg
 	defer backendLog.Flush()
+	util.Trace()
 
 	if cfg.Profile != "" {
 		go func() {
@@ -67,6 +71,8 @@ func walletMain() error {
 			log.Errorf("%v", http.ListenAndServe(listenAddr, nil))
 		}()
 	}
+
+	util.Trace()
 
 	// Load the wallet database.  It must have been created with the
 	// --create option already or this will return an appropriate error.
@@ -86,8 +92,11 @@ func walletMain() error {
 		log.Errorf("Unable to create HTTP server: %v", err)
 		return err
 	}
+	util.Trace()
 	server.Start()
+	util.Trace()
 	server.SetWallet(wallet)
+	util.Trace()
 
 	// Shutdown the server if an interrupt signal is received.
 	addInterruptHandler(server.Stop)

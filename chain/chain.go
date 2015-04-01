@@ -18,6 +18,7 @@ package chain
 
 import (
 	"errors"
+	"fmt"
 	"sync"
 	"time"
 
@@ -28,6 +29,8 @@ import (
 	"github.com/FactomProject/btcutil"
 	"github.com/FactomProject/btcwallet/txstore"
 	"github.com/FactomProject/btcwallet/waddrmgr"
+
+	"github.com/FactomProject/FactomCode/util"
 )
 
 // Client represents a persistent client connection to a bitcoin RPC server
@@ -113,7 +116,11 @@ func (c *Client) Start() error {
 	c.quitMtx.Unlock()
 
 	c.wg.Add(1)
+
+	util.Trace()
 	go c.handler()
+	util.Trace()
+
 	return nil
 }
 
@@ -284,13 +291,27 @@ func (c *Client) onRescanFinished(hash *wire.ShaHash, height int32, blkTime time
 // handler maintains a queue of notifications and the current state (best
 // block) of the chain.
 func (c *Client) handler() {
+	util.Trace()
 	hash, height, err := c.GetBestBlock()
 	if err != nil {
 		close(c.quit)
 		c.wg.Done()
 	}
 
+	if nil == hash {
+		util.Trace("HASH is nil !!!!!!!!!!!!!!!!!!!!!!!!!\n")
+		err = errors.New("HASH is nil !!!")
+		close(c.quit)
+		c.wg.Done()
+
+		return
+	}
+
+	util.Trace()
+	fmt.Println("hash= ", hash)
+	fmt.Println("height= ", height)
 	bs := &waddrmgr.BlockStamp{Hash: *hash, Height: height}
+	util.Trace()
 
 	// TODO: Rather than leaving this as an unbounded queue for all types of
 	// notifications, try dropping ones where a later enqueued notification
