@@ -665,22 +665,19 @@ var ErrNoAuth = errors.New("no auth")
 // This check is time-constant.
 func (s *rpcServer) checkAuthHeader(r *http.Request) error {
 	util.Trace()
-	return nil // TODO: FIXME
-	/*
-		util.Trace(fmt.Sprintf(spew.Sdump(r)))
+	//	util.Trace(fmt.Sprintf(spew.Sdump(r)))
 
-		authhdr := r.Header["Authorization"]
-		if len(authhdr) == 0 {
-			return ErrNoAuth
-		}
+	authhdr := r.Header["Authorization"]
+	if len(authhdr) == 0 {
+		return ErrNoAuth
+	}
 
-		authsha := sha256.Sum256([]byte(authhdr[0]))
-		cmp := subtle.ConstantTimeCompare(authsha[:], s.authsha[:])
-		if cmp != 1 {
-			return errors.New("bad auth")
-		}
-		return nil
-	*/
+	authsha := sha256.Sum256([]byte(authhdr[0]))
+	cmp := subtle.ConstantTimeCompare(authsha[:], s.authsha[:])
+	if cmp != 1 {
+		return errors.New("bad auth")
+	}
+	return nil
 }
 
 // throttledFn wraps an http.HandlerFunc with throttling of concurrent active
