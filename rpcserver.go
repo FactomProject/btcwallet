@@ -48,6 +48,9 @@ import (
 	"github.com/FactomProject/btcwallet/txstore"
 	"github.com/FactomProject/btcwallet/waddrmgr"
 	"github.com/FactomProject/websocket"
+
+	"github.com/FactomProject/FactomCode/util"
+	//	"github.com/davecgh/go-spew/spew"
 )
 
 // Error types to simplify the reporting of specific categories of
@@ -661,17 +664,23 @@ var ErrNoAuth = errors.New("no auth")
 //
 // This check is time-constant.
 func (s *rpcServer) checkAuthHeader(r *http.Request) error {
-	authhdr := r.Header["Authorization"]
-	if len(authhdr) == 0 {
-		return ErrNoAuth
-	}
+	util.Trace()
+	return nil // TODO: FIXME
+	/*
+		util.Trace(fmt.Sprintf(spew.Sdump(r)))
 
-	authsha := sha256.Sum256([]byte(authhdr[0]))
-	cmp := subtle.ConstantTimeCompare(authsha[:], s.authsha[:])
-	if cmp != 1 {
-		return errors.New("bad auth")
-	}
-	return nil
+		authhdr := r.Header["Authorization"]
+		if len(authhdr) == 0 {
+			return ErrNoAuth
+		}
+
+		authsha := sha256.Sum256([]byte(authhdr[0]))
+		cmp := subtle.ConstantTimeCompare(authsha[:], s.authsha[:])
+		if cmp != 1 {
+			return errors.New("bad auth")
+		}
+		return nil
+	*/
 }
 
 // throttledFn wraps an http.HandlerFunc with throttling of concurrent active
@@ -1437,6 +1446,8 @@ func NoEncryptedWallet(*Wallet, *chain.Client, btcjson.Cmd) (interface{}, error)
 // the http post and (if the request is from a websocket connection) websocket
 // handler maps.  If a suitable handler could not be found, ok is false.
 func lookupAnyHandler(method string) (f requestHandler, ok bool) {
+	util.Trace(method)
+
 	f, ok = rpcHandlers[method]
 	return
 }
@@ -1446,6 +1457,8 @@ func lookupAnyHandler(method string) (f requestHandler, ok bool) {
 // wallet component necessary to complete the request.  If ok is false, the
 // function is invalid and should be passed through instead.
 func unloadedWalletHandlerFunc(method string) (f requestHandler, ok bool) {
+	util.Trace(method)
+
 	_, ok = rpcHandlers[method]
 	if ok {
 		f = UnloadedWallet
@@ -1687,6 +1700,8 @@ func GetAddressesByAccount(w *Wallet, chainSvr *chain.Client, icmd btcjson.Cmd) 
 // account (wallet), or an error if the requested account does not
 // exist.
 func GetBalance(w *Wallet, chainSvr *chain.Client, icmd btcjson.Cmd) (interface{}, error) {
+	util.Trace()
+
 	cmd := icmd.(*btcjson.GetBalanceCmd)
 
 	var balance btcutil.Amount
@@ -1728,6 +1743,8 @@ func GetBestBlockHash(w *Wallet, chainSvr *chain.Client, icmd btcjson.Cmd) (inte
 // GetBlockCount handles a getblockcount request by returning the chain height
 // of the most recently processed block.
 func GetBlockCount(w *Wallet, chainSvr *chain.Client, icmd btcjson.Cmd) (interface{}, error) {
+	util.Trace()
+
 	blk := w.Manager.SyncedTo()
 	return blk.Height, nil
 }

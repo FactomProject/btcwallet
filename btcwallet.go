@@ -127,7 +127,11 @@ func walletMain() error {
 			log.Errorf("Cannot create chain server RPC client: %v", err)
 			return
 		}
+
+		util.Trace()
 		err = rpcc.Start()
+		util.Trace()
+
 		if err != nil {
 			log.Warnf("Connection to Bitcoin RPC chain server " +
 				"unsuccessful -- available RPC methods will be limited")

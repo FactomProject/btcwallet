@@ -56,6 +56,8 @@ type Client struct {
 // the same bitcoin network as described by the passed chain parameters, the
 // connection will be disconnected.
 func NewClient(chainParams *chaincfg.Params, connect, user, pass string, certs []byte, disableTLS bool) (*Client, error) {
+	util.Trace(fmt.Sprintf("%s %s %s", connect, user, pass))
+
 	client := Client{
 		chainParams:         chainParams,
 		enqueueNotification: make(chan interface{}),
