@@ -42,6 +42,8 @@ import (
 	"github.com/FactomProject/btcwallet/waddrmgr"
 	"github.com/FactomProject/btcwallet/walletdb"
 	"github.com/FactomProject/golangcrypto/ssh/terminal"
+
+	"github.com/FactomProject/FactomCode/util"
 )
 
 // ErrNotSynced describes an error where an operation cannot complete
@@ -442,6 +444,8 @@ func (w *Wallet) WaitForShutdown() {
 // ChainSynced returns whether the wallet has been attached to a chain server
 // and synced up to the best block on the main chain.
 func (w *Wallet) ChainSynced() bool {
+	util.Trace()
+
 	w.chainSvrSyncMtx.Lock()
 	synced := w.chainSvrSynced
 	w.chainSvrSyncMtx.Unlock()
@@ -456,6 +460,8 @@ func (w *Wallet) ChainSynced() bool {
 // until the reconnect notification is received, at which point the wallet can be
 // marked out of sync again until after the next rescan completes.
 func (w *Wallet) SetChainSynced(synced bool) {
+	util.Trace()
+
 	w.chainSvrSyncMtx.Lock()
 	w.chainSvrSynced = synced
 	w.chainSvrSyncMtx.Unlock()
@@ -478,6 +484,8 @@ func (w *Wallet) activeData() ([]btcutil.Address, []txstore.Credit, error) {
 // finished.
 //
 func (w *Wallet) syncWithChain() error {
+	util.Trace()
+
 	// Request notifications for connected and disconnected blocks.
 	//
 	// TODO(jrick): Either request this notification only once, or when
@@ -490,6 +498,7 @@ func (w *Wallet) syncWithChain() error {
 	if err != nil {
 		return err
 	}
+	util.Trace()
 
 	// Request notifications for transactions sending to all wallet
 	// addresses.
@@ -497,6 +506,7 @@ func (w *Wallet) syncWithChain() error {
 	if err != nil {
 		return err
 	}
+	util.Trace()
 
 	// TODO(jrick): How should this handle a synced height earlier than
 	// the chain server best block?
@@ -525,6 +535,7 @@ func (w *Wallet) syncWithChain() error {
 				return err
 			}
 			w.TxStore.MarkDirty()
+			util.Trace()
 		}
 
 		break
