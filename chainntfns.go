@@ -22,9 +22,13 @@ import (
 	"github.com/FactomProject/btcwallet/chain"
 	"github.com/FactomProject/btcwallet/txstore"
 	"github.com/FactomProject/btcwallet/waddrmgr"
+
+	"github.com/FactomProject/FactomCode/util"
 )
 
 func (w *Wallet) handleChainNotifications() {
+	util.Trace()
+
 	sync := func(w *Wallet) {
 		// At the moment there is no recourse if the rescan fails for
 		// some reason, however, the wallet will not be marked synced
@@ -67,6 +71,8 @@ func (w *Wallet) handleChainNotifications() {
 // that's currently in-sync with the chain server as being synced up to
 // the passed block.
 func (w *Wallet) connectBlock(bs waddrmgr.BlockStamp) {
+	util.Trace()
+
 	if !w.ChainSynced() {
 		return
 	}
@@ -85,6 +91,8 @@ func (w *Wallet) connectBlock(bs waddrmgr.BlockStamp) {
 // block history from the reorged block for a wallet in-sync with the chain
 // server.
 func (w *Wallet) disconnectBlock(bs waddrmgr.BlockStamp) {
+	util.Trace()
+
 	if !w.ChainSynced() {
 		return
 	}
@@ -111,6 +119,8 @@ func (w *Wallet) disconnectBlock(bs waddrmgr.BlockStamp) {
 }
 
 func (w *Wallet) addReceivedTx(tx *btcutil.Tx, block *txstore.Block) error {
+	util.Trace()
+
 	// For every output, if it pays to a wallet address, insert the
 	// transaction into the store (possibly moving it from unconfirmed to
 	// confirmed), and add a credit record if one does not already exist.
@@ -165,6 +175,8 @@ func (w *Wallet) addReceivedTx(tx *btcutil.Tx, block *txstore.Block) error {
 // addRedeemingTx inserts the notified spending transaction as a debit and
 // schedules the transaction store for a future file write.
 func (w *Wallet) addRedeemingTx(tx *btcutil.Tx, block *txstore.Block) error {
+	util.Trace()
+
 	txr, err := w.TxStore.InsertTx(tx, block)
 	if err != nil {
 		return err
@@ -185,6 +197,8 @@ func (w *Wallet) addRedeemingTx(tx *btcutil.Tx, block *txstore.Block) error {
 }
 
 func (w *Wallet) notifyBalances(curHeight int32) {
+	util.Trace()
+
 	// Don't notify unless wallet is synced to the chain server.
 	if !w.ChainSynced() {
 		return

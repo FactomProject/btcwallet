@@ -22,6 +22,8 @@ import (
 	"github.com/FactomProject/btcwallet/chain"
 	"github.com/FactomProject/btcwallet/txstore"
 	"github.com/FactomProject/btcwallet/waddrmgr"
+
+	"github.com/FactomProject/FactomCode/util"
 )
 
 // RescanProgressMsg reports the current progress made by a rescan for a
@@ -65,6 +67,8 @@ type rescanBatch struct {
 // returned with the final error of the rescan.  The channel is buffered
 // and does not need to be read to prevent a deadlock.
 func (w *Wallet) SubmitRescan(job *RescanJob) <-chan error {
+	util.Trace()
+
 	errChan := make(chan error, 1)
 	job.err = errChan
 	w.rescanAddJob <- job
@@ -73,6 +77,8 @@ func (w *Wallet) SubmitRescan(job *RescanJob) <-chan error {
 
 // batch creates the rescanBatch for a single rescan job.
 func (job *RescanJob) batch() *rescanBatch {
+	util.Trace()
+
 	return &rescanBatch{
 		initialSync: job.InitialSync,
 		addrs:       job.Addrs,
@@ -110,6 +116,8 @@ func (b *rescanBatch) done(err error) {
 // submissions, and possibly batching many waiting requests together so they
 // can be handled by a single rescan after the current one completes.
 func (w *Wallet) rescanBatchHandler() {
+	util.Trace()
+
 	var curBatch, nextBatch *rescanBatch
 
 out:
@@ -174,6 +182,8 @@ out:
 // rescanProgressHandler handles notifications for partially and fully completed
 // rescans by marking each rescanned address as partially or fully synced.
 func (w *Wallet) rescanProgressHandler() {
+	util.Trace()
+
 out:
 	for {
 		// These can't be processed out of order since both chans are
@@ -196,6 +206,8 @@ out:
 			}
 
 		case msg := <-w.rescanFinished:
+			util.Trace()
+
 			n := msg.Notification
 			addrs := msg.Addresses
 			noun := pickNoun(len(addrs), "address", "addresses")
@@ -230,6 +242,8 @@ out:
 // RPC requests to perform a rescan.  New jobs are not read until a rescan
 // finishes.
 func (w *Wallet) rescanRPCHandler() {
+	util.Trace()
+
 	for batch := range w.rescanBatch {
 		// Log the newly-started rescan.
 		numAddrs := len(batch.addrs)
@@ -253,6 +267,8 @@ func (w *Wallet) rescanRPCHandler() {
 // current best block in the main chain, and is considered an initial sync
 // rescan.
 func (w *Wallet) Rescan(addrs []btcutil.Address, unspent []txstore.Credit) error {
+	util.Trace()
+
 	outpoints := make([]*wire.OutPoint, len(unspent))
 	for i, output := range unspent {
 		outpoints[i] = output.OutPoint()
