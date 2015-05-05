@@ -1138,6 +1138,8 @@ func (w *Wallet) DumpWIFPrivateKey(addr btcutil.Address) (string, error) {
 func (w *Wallet) ImportPrivateKey(wif *btcutil.WIF, bs *waddrmgr.BlockStamp,
 	rescan bool) (string, error) {
 
+	util.Trace()
+
 	// The starting block for the key is the genesis block unless otherwise
 	// specified.
 	if bs == nil {

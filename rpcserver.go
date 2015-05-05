@@ -1573,6 +1573,8 @@ func makeMultiSigScript(w *Wallet, keys []string, nRequired int) ([]byte, error)
 // AddMultiSigAddress handles an addmultisigaddress request by adding a
 // multisig address to the given wallet.
 func AddMultiSigAddress(w *Wallet, chainSvr *chain.Client, icmd btcjson.Cmd) (interface{}, error) {
+	util.Trace()
+
 	cmd := icmd.(*btcjson.AddMultisigAddressCmd)
 
 	err := checkDefaultAccount(cmd.Account)

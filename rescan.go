@@ -92,6 +92,8 @@ func (job *RescanJob) batch() *rescanBatch {
 // the minimum of the two jobs.  This method does not check for
 // duplicate addresses or outpoints.
 func (b *rescanBatch) merge(job *RescanJob) {
+	util.Trace()
+
 	if job.InitialSync {
 		b.initialSync = true
 	}

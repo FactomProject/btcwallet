@@ -30,6 +30,9 @@ import (
 	"github.com/FactomProject/btcwallet/internal/zero"
 	"github.com/FactomProject/btcwallet/snacl"
 	"github.com/FactomProject/btcwallet/walletdb"
+
+	"github.com/FactomProject/FactomCode/util"
+	"github.com/davecgh/go-spew/spew"
 )
 
 const (
@@ -2213,6 +2216,8 @@ func Open(namespace walletdb.Namespace, pubPassphrase []byte, chainParams *chain
 // A ManagerError with an error code of ErrAlreadyExists will be returned the
 // address manager already exists in the specified namespace.
 func Create(namespace walletdb.Namespace, seed, pubPassphrase, privPassphrase []byte, chainParams *chaincfg.Params, config *Options) (*Manager, error) {
+	util.Trace()
+
 	// Return an error if the manager has already been created in the given
 	// database namespace.
 	exists, err := managerExists(namespace)
@@ -2371,6 +2376,8 @@ func Create(namespace walletdb.Namespace, seed, pubPassphrase, privPassphrase []
 		str := "failed to encrypt private key for account 0"
 		return nil, managerError(ErrCrypto, str, err)
 	}
+
+	util.Trace("genesis block hash: " + spew.Sdump(*chainParams.GenesisHash))
 
 	// Use the genesis block for the passed chain as the created at block
 	// for the default.
