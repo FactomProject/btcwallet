@@ -40,7 +40,7 @@ import (
 	"github.com/FactomProject/btcd/btcec"
 	"github.com/FactomProject/btcd/btcjson"
 	"github.com/FactomProject/btcd/btcjson/btcws"
-	"github.com/FactomProject/btcd/txscript"
+	//	"github.com/FactomProject/btcd/txscript"
 	"github.com/FactomProject/btcd/wire"
 	"github.com/FactomProject/btcrpcclient"
 	"github.com/FactomProject/btcutil"
@@ -1525,6 +1525,7 @@ func jsonError(err error) *btcjson.Error {
 	return &jsonErr
 }
 
+/*
 // makeMultiSigScript is a helper function to combine common logic for
 // AddMultiSig and CreateMultiSig.
 // all error codes are rpc parse error here to match bitcoind which just throws
@@ -1569,6 +1570,7 @@ func makeMultiSigScript(w *Wallet, keys []string, nRequired int) ([]byte, error)
 
 	return txscript.MultiSigScript(keysesPrecious, nRequired)
 }
+*/
 
 // AddMultiSigAddress handles an addmultisigaddress request by adding a
 // multisig address to the given wallet.
@@ -2876,6 +2878,8 @@ func SignRawTransaction(w *Wallet, chainSvr *chain.Client, icmd btcjson.Cmd) (in
 
 // ValidateAddress handles the validateaddress command.
 func ValidateAddress(w *Wallet, chainSvr *chain.Client, icmd btcjson.Cmd) (interface{}, error) {
+	util.Trace()
+
 	cmd := icmd.(*btcjson.ValidateAddressCmd)
 
 	result := btcjson.ValidateAddressResult{}
