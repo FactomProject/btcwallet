@@ -24,7 +24,7 @@ import (
 	"time"
 
 	// 	"github.com/FactomProject/btcd/blockchain"
-	//	"github.com/FactomProject/btcd/txscript"
+	"github.com/FactomProject/btcd/txscript"
 	"github.com/FactomProject/btcd/wire"
 	"github.com/FactomProject/btcutil"
 	"github.com/FactomProject/btcwallet/txstore"

@@ -40,7 +40,7 @@ import (
 	"github.com/FactomProject/btcd/btcec"
 	"github.com/FactomProject/btcd/btcjson"
 	"github.com/FactomProject/btcd/btcjson/btcws"
-	//	"github.com/FactomProject/btcd/txscript"
+	"github.com/FactomProject/btcd/txscript"
 	"github.com/FactomProject/btcd/wire"
 	"github.com/FactomProject/btcrpcclient"
 	"github.com/FactomProject/btcutil"
@@ -1575,54 +1575,64 @@ func makeMultiSigScript(w *Wallet, keys []string, nRequired int) ([]byte, error)
 // AddMultiSigAddress handles an addmultisigaddress request by adding a
 // multisig address to the given wallet.
 func AddMultiSigAddress(w *Wallet, chainSvr *chain.Client, icmd btcjson.Cmd) (interface{}, error) {
-	util.Trace()
+	util.Trace("NOT IMPLEMENTED -- probably NOT NEEDED?")
+	panic(333)
+	return nil, nil
 
-	cmd := icmd.(*btcjson.AddMultisigAddressCmd)
+	/*
+		cmd := icmd.(*btcjson.AddMultisigAddressCmd)
 
-	err := checkDefaultAccount(cmd.Account)
-	if err != nil {
-		return nil, err
-	}
+		err := checkDefaultAccount(cmd.Account)
+		if err != nil {
+			return nil, err
+		}
 
-	script, err := makeMultiSigScript(w, cmd.Keys, cmd.NRequired)
-	if err != nil {
-		return nil, ParseError{err}
-	}
+		script, err := makeMultiSigScript(w, cmd.Keys, cmd.NRequired)
+		if err != nil {
+			return nil, ParseError{err}
+		}
 
-	// TODO(oga) blockstamp current block?
-	bs := &waddrmgr.BlockStamp{
-		Hash:   *activeNet.Params.GenesisHash,
-		Height: 0,
-	}
+		// TODO(oga) blockstamp current block?
+		bs := &waddrmgr.BlockStamp{
+			Hash:   *activeNet.Params.GenesisHash,
+			Height: 0,
+		}
 
-	addr, err := w.Manager.ImportScript(script, bs)
-	if err != nil {
-		return nil, err
-	}
+		addr, err := w.Manager.ImportScript(script, bs)
+		if err != nil {
+			return nil, err
+		}
 
-	return addr.Address().EncodeAddress(), nil
+		return addr.Address().EncodeAddress(), nil
+	*/
 }
 
 // CreateMultiSig handles an createmultisig request by returning a
 // multisig address for the given inputs.
 func CreateMultiSig(w *Wallet, chainSvr *chain.Client, icmd btcjson.Cmd) (interface{}, error) {
-	cmd := icmd.(*btcjson.CreateMultisigCmd)
+	util.Trace("NOT IMPLEMENTED -- probably NOT NEEDED?")
+	panic(334)
+	return nil, nil
 
-	script, err := makeMultiSigScript(w, cmd.Keys, cmd.NRequired)
-	if err != nil {
-		return nil, ParseError{err}
-	}
+	/*
+		cmd := icmd.(*btcjson.CreateMultisigCmd)
 
-	address, err := btcutil.NewAddressScriptHash(script, activeNet.Params)
-	if err != nil {
-		// above is a valid script, shouldn't happen.
-		return nil, err
-	}
+		script, err := makeMultiSigScript(w, cmd.Keys, cmd.NRequired)
+		if err != nil {
+			return nil, ParseError{err}
+		}
 
-	return btcjson.CreateMultiSigResult{
-		Address:      address.EncodeAddress(),
-		RedeemScript: hex.EncodeToString(script),
-	}, nil
+		address, err := btcutil.NewAddressScriptHash(script, activeNet.Params)
+		if err != nil {
+			// above is a valid script, shouldn't happen.
+			return nil, err
+		}
+
+		return btcjson.CreateMultiSigResult{
+			Address:      address.EncodeAddress(),
+			RedeemScript: hex.EncodeToString(script),
+		}, nil
+	*/
 }
 
 // DumpPrivKey handles a dumpprivkey request with the private key
@@ -1931,6 +1941,8 @@ func RenameAccount(w *Wallet, chainSvr *chain.Client, icmd btcjson.Cmd) (interfa
 // TODO: Follow BIP 0044 and warn if number of unused addresses exceeds
 // the gap limit.
 func GetNewAddress(w *Wallet, chainSvr *chain.Client, icmd btcjson.Cmd) (interface{}, error) {
+	util.Trace()
+
 	cmd := icmd.(*btcjson.GetNewAddressCmd)
 
 	account, err := w.Manager.LookupAccount(cmd.Account)

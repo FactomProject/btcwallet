@@ -186,6 +186,8 @@ type Wallet struct {
 // newWallet creates a new Wallet structure with the provided address manager
 // and transaction store.
 func newWallet(mgr *waddrmgr.Manager, txs *txstore.Store) *Wallet {
+	util.Trace()
+
 	return &Wallet{
 		Manager:             mgr,
 		TxStore:             txs,
@@ -1337,6 +1339,8 @@ func (w *Wallet) SortedActivePaymentAddresses() ([]string, error) {
 
 // NewAddress returns the next external chained address for a wallet.
 func (w *Wallet) NewAddress(account uint32) (btcutil.Address, error) {
+	util.Trace()
+
 	// Get next address from wallet.
 	addrs, err := w.Manager.NextExternalAddresses(account, 1)
 	if err != nil {
