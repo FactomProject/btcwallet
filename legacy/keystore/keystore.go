@@ -41,6 +41,8 @@ import (
 	"github.com/FactomProject/btcutil"
 	"github.com/FactomProject/btcwallet/rename"
 	"github.com/FactomProject/golangcrypto/ripemd160"
+
+	"github.com/FactomProject/FactomCode/util"
 )
 
 const (
@@ -2191,7 +2193,8 @@ func newBtcAddressWithoutPrivkey(s *Store, pubkey, iv []byte, bs *BlockStamp) (a
 		return nil, err
 	}
 
-	address, err := btcutil.NewAddressPubKeyHash(btcutil.Hash160(pubkey), s.netParams())
+	//	address, err := btcutil.NewAddressPubKeyHash(btcutil.Hash160(pubkey), s.netParams())
+	address, err := btcutil.NewAddressPubKey(pubkey, s.netParams())
 	if err != nil {
 		return nil, err
 	}
@@ -2270,6 +2273,8 @@ func (a *btcAddress) verifyKeypairs() error {
 
 // ReadFrom reads an encrypted address from an io.Reader.
 func (a *btcAddress) ReadFrom(r io.Reader) (n int64, err error) {
+	util.Trace()
+
 	var read int64
 
 	// Checksums
@@ -2340,7 +2345,8 @@ func (a *btcAddress) ReadFrom(r io.Reader) (n int64, err error) {
 	}
 	a.pubKey = pk
 
-	addr, err := btcutil.NewAddressPubKeyHash(pubKeyHash[:], a.store.netParams())
+	//	addr, err := btcutil.NewAddressPubKeyHash(pubKeyHash[:], a.store.netParams())
+	addr, err := btcutil.NewAddressPubKey(pubKey[:], a.store.netParams())
 	if err != nil {
 		return n, err
 	}

@@ -24,6 +24,7 @@ import (
 	"github.com/FactomProject/btcwallet/waddrmgr"
 
 	"github.com/FactomProject/FactomCode/util"
+	"github.com/davecgh/go-spew/spew"
 )
 
 // RescanProgressMsg reports the current progress made by a rescan for a
@@ -244,11 +245,13 @@ out:
 // RPC requests to perform a rescan.  New jobs are not read until a rescan
 // finishes.
 func (w *Wallet) rescanRPCHandler() {
-	util.Trace()
+	util.Trace("rescanBatch=" + spew.Sdump(w.rescanBatch))
 
 	for batch := range w.rescanBatch {
 		// Log the newly-started rescan.
 		numAddrs := len(batch.addrs)
+		util.Trace("batch.addrs=" + spew.Sdump(batch.addrs))
+
 		noun := pickNoun(numAddrs, "address", "addresses")
 		log.Infof("Started rescan from block %v (height %d) for %d %s",
 			batch.bs.Hash, batch.bs.Height, numAddrs, noun)

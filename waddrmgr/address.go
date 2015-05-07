@@ -25,6 +25,9 @@ import (
 	"github.com/FactomProject/btcutil"
 	"github.com/FactomProject/btcutil/hdkeychain"
 	"github.com/FactomProject/btcwallet/internal/zero"
+
+	"github.com/FactomProject/FactomCode/util"
+	"github.com/davecgh/go-spew/spew"
 )
 
 // ManagedAddress is an interface that provides acces to information regarding
@@ -91,9 +94,10 @@ type ManagedScriptAddress interface {
 // managedAddress represents a public key address.  It also may or may not have
 // the private key associated with the public key.
 type managedAddress struct {
-	manager          *Manager
-	account          uint32
-	address          *btcutil.AddressPubKeyHash
+	manager *Manager
+	account uint32
+	//	address          *btcutil.AddressPubKeyHash
+	address          *btcutil.AddressPubKey
 	imported         bool
 	internal         bool
 	compressed       bool
@@ -162,7 +166,9 @@ func (a *managedAddress) Address() btcutil.Address {
 //
 // This is part of the ManagedAddress interface implementation.
 func (a *managedAddress) AddrHash() []byte {
-	return a.address.Hash160()[:]
+	util.Trace("NOT IMPLEMENTED !!!!!!!!!!")
+	panic(12345)
+	//	return a.address.Hash160()[:]
 }
 
 // Imported returns true if the address was imported instead of being part of an
@@ -267,14 +273,23 @@ func (a *managedAddress) ExportPrivKey() (*btcutil.WIF, error) {
 // passed account, public key, and whether or not the public key should be
 // compressed.
 func newManagedAddressWithoutPrivKey(m *Manager, account uint32, pubKey *btcec.PublicKey, compressed bool) (*managedAddress, error) {
+	util.Trace()
 	// Create a pay-to-pubkey-hash address from the public key.
-	var pubKeyHash []byte
+	//	var pubKeyHash []byte
+	var pk []byte
 	if compressed {
-		pubKeyHash = btcutil.Hash160(pubKey.SerializeCompressed())
+		//		pubKeyHash = btcutil.Hash160(pubKey.SerializeCompressed())
+		pk = pubKey.SerializeCompressed()
 	} else {
-		pubKeyHash = btcutil.Hash160(pubKey.SerializeUncompressed())
+		//		pubKeyHash = btcutil.Hash160(pubKey.SerializeUncompressed())
+		pk = pubKey.SerializeUncompressed()
 	}
-	address, err := btcutil.NewAddressPubKeyHash(pubKeyHash, m.chainParams)
+	//	address, err := btcutil.NewAddressPubKeyHash(pubKeyHash, m.chainParams)
+	address, err := btcutil.NewAddressPubKey(pk, m.chainParams)
+
+	util.Trace(spew.Sdump(pk))
+	util.Trace(spew.Sdump(address))
+
 	if err != nil {
 		return nil, err
 	}
